@@ -4,12 +4,12 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import (ListModelMixin, RetrieveModelMixin, DestroyModelMixin, UpdateModelMixin,)
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Swaps, SwapSerializer
+from .models import PostSwapSerializer, Swaps, SwapSerializer
 
 
-class SwapsAPIView(GenericAPIView):
+class SwapsAPIView(ListModelMixin, GenericAPIView):
     queryset = Swaps.objects.all()
-    serializer_class = SwapSerializer
+    serializer_class = PostSwapSerializer
     permission_classes = (AllowAny,)
 
     
@@ -22,11 +22,11 @@ class SwapsAPIView(GenericAPIView):
         battery swap:- the battery swap data created by a user.
         endpoints.
         """
-        serializer_class = SwapSerializer
+        serializer_class = PostSwapSerializer
         swap = request.data.get(
             'swap', {}) if 'swap' in request.data else request.data
 
-        serializer = self.serializer_class(data=swap)
+        serializer = serializer_class(data=swap)
         serializer.is_valid(raise_exception=True)
         new_swap = serializer.save()
 

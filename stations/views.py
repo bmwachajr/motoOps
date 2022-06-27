@@ -7,7 +7,7 @@ from rest_framework import status
 from .models import Stations, StationSerializer
 
 
-class StationsAPIView(GenericAPIView):
+class StationsAPIView(ListModelMixin, GenericAPIView):
     queryset = Stations.objects.all()
     serializer_class = StationSerializer
     permission_classes = (AllowAny,)
