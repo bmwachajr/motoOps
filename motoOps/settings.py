@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'drf_yasg',
     'batteries',
+    'stations',
+    'drivers',
+    'swaps',
     'rest_framework'
 ]
 

@@ -38,4 +38,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/batteries/', include('batteries.urls',
                             namespace='batteries')),
+    path('api/v1/stations/', include('stations.urls',
+                            namespace='stations')),
+    path('api/v1/drivers/', include('drivers.urls',
+                            namespace='drivers')),
+    path('api/v1/swaps/', include('swaps.urls',
+                            namespace='swaps')),
 ]
