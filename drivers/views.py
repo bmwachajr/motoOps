@@ -7,7 +7,7 @@ from rest_framework import status
 from .models import Drivers, DriverSerializer
 
 
-class DriversAPIView(GenericAPIView):
+class DriversAPIView(ListModelMixin, GenericAPIView):
     queryset = Drivers.objects.all()
     serializer_class = DriverSerializer
     permission_classes = (AllowAny,)

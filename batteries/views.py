@@ -7,7 +7,7 @@ from rest_framework import status
 from .models import Batteries, BatterySerializer
 
 
-class BatteriesAPIView(GenericAPIView):
+class BatteriesAPIView(ListModelMixin, GenericAPIView):
     queryset = Batteries.objects.all()
     serializer_class = BatterySerializer
     permission_classes = (AllowAny,)
