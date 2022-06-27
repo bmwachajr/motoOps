@@ -42,4 +42,6 @@ urlpatterns = [
                             namespace='stations')),
     path('api/v1/drivers/', include('drivers.urls',
                             namespace='drivers')),
+    path('api/v1/swaps/', include('swaps.urls',
+                            namespace='swaps')),
 ]

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'batteries',
     'stations',
     'drivers',
+    'swaps',
     'rest_framework'
 ]
 
