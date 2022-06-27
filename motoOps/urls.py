@@ -40,4 +40,6 @@ urlpatterns = [
                             namespace='batteries')),
     path('api/v1/stations/', include('stations.urls',
                             namespace='stations')),
+    path('api/v1/drivers/', include('drivers.urls',
+                            namespace='drivers')),
 ]

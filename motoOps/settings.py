@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'batteries',
     'stations',
+    'drivers',
     'rest_framework'
 ]
 
