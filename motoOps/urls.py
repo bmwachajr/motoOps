@@ -38,4 +38,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/batteries/', include('batteries.urls',
                             namespace='batteries')),
+    path('api/v1/stations/', include('stations.urls',
+                            namespace='stations')),
 ]
