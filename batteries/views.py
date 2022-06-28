@@ -4,7 +4,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import (ListModelMixin, RetrieveModelMixin, DestroyModelMixin, UpdateModelMixin,)
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Batteries, BatterySerializer
+from .models import Batteries, BatterySerializer, BatteryTelematicSerializer, BatteryTelematics
 
 
 class BatteriesAPIView(ListModelMixin, GenericAPIView):
@@ -84,3 +84,51 @@ class BatteryAPIView(
         Method to handle delete requests for deleting a battery
         """        
         return self.delete(request, *args, **kwargs)
+
+
+class BatteryTelematicsAPIView(ListModelMixin, GenericAPIView):
+    serializer_class = BatteryTelematicSerializer
+    permission_classes = (AllowAny,)
+
+    def get_queryset(self):
+        try:
+            battery = Batteries.objects.get(pk=self.kwargs["pk"])
+            return BatteryTelematics.objects.filter(
+                battery=self.kwargs["pk"]
+            )
+
+        except Batteries.DoesNotExist:
+            raise Batteries.DoesNotExist
+    
+    def post(self, request, *args, **kwargs):
+        """
+        Method to handle post requests for creating a battery telematic
+        :params:
+        request:- holds the request a user sends to the server.
+        :returns:
+        battery telematics:- the battery telematics data created by a user.
+        endpoints.
+        """
+        serializer_class = BatteryTelematicSerializer
+        battery_telematics = request.data.get(
+            'telematics', {}) if 'telematics' in request.data else request.data
+        serializer = self.serializer_class(data=battery_telematics)
+        serializer.is_valid(raise_exception=True)
+        new_battery_telematics = serializer.save()
+
+        resp_data = serializer_class(new_battery_telematics).data
+
+        return Response(resp_data, status=status.HTTP_201_CREATED)
+
+
+    def get(self, request, *args, **kwargs):
+        """
+        Method to handle post requests for retrieving batteries
+        :params:
+        request:- holds the request a user sends to the server.
+        :returns:
+        battery telematics:- the battery telematics data created by a user.
+        endpoints.
+        """
+        self.serializer_class = BatteryTelematicSerializer
+        return self.list(request, *args, **kwargs)
